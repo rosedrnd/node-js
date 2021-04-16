@@ -53,13 +53,18 @@
                 $.ajax({
                     url: 'http://localhost:3000/api/user/login',
                     type: 'POST', 
-                    dataType: "text",
+                    dataType: "json",
                     data: {
                         email: $("#email").val(),
                         password: $("#password").val()
                     },
                     success: function(data, status) {
-                        $('#resultat').html(`<p class="message container">You successfully created an account! ${data} ${status}</p>`);
+                        $('#resultat').html(`<p class="message container">You are logged-in! ${data} ${status}</p>`);
+                        //local storage
+                        localStorage.setItem("userId", data["userId"]);
+                        localStorage.setItem("token", data["token"]);
+                        window.location.href = "./index4.html"; //automatically redirects you to the show all articles page
+                       
                     },
                     error: function(){
                         $('#resultat').html("<p>Log in error</p>"); 

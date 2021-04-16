@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Les articles</title>
+    <link rel="stylesheet" href="style-article.css">
+</head>
+
+<body>
+
+    <button id="button2">Deconnexion</button>
+    <h1>Les articles</h1>
+	<button id="button">Afficher les articles</button>
+
+    <div id="resultat">
+        <!-- Nous allons afficher un retour en jQuery au visiteur -->
+    </div>
+         
+        
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#button2").click(function(e){
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+            });
+            $("#button").click(function(e){
+                $.ajax({
+                    url: 'http://localhost:3000/api/article/', 
+                    type : 'GET',
+                    data:localStorage.getItem("userId"),
+                    dataType:'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("token"));
+                    },
+                    success: function(data,status){
+                        for(i=3; i<data.length; i++) {
+                        $("#resultat").append( //pour ajouter à l'un à l'autre
+                            
+                            `<div class= "container"><h3>${data[i].title}</h3><br>
+                            <img class ="image" src=${data[i].imageUrl}><br>
+                            <p>${data[i].description}</p><div>
+                            `);
+                            }//the first data and dislays on the title
+                        
+                    },
+                    error : function(res, status, erreur){
+                        $("#resultat").html("<p>Marche pas</p>" + res + status + erreur);
+                    }
+                });
+            });
+        });
+         
+    </script>
+</body>
+</html>
