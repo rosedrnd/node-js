@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Un formulaire</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h1>Sign up</h1>
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name= "email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Upload an image</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="imageUrl">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Accept our terms and conditions</label>
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary" id="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="resultat">
+        <!-- Nous allons afficher un retour en jQuery au visiteur -->
+    </div>
+
+            
+    <!--cdn JQUERY-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        //load the html document
+        $(document).ready(function(){
+            //cancel the submit request
+            $("#submit").click(function(e){
+                e.preventDefault();
+                
+                $.ajax({
+                        url:'http://localhost:3000/api/user/signup',
+                        type: 'POST',
+                        dataType: "text",
+                        data: {
+                            email : $("#exampleInputEmail1").val(), 
+                            password : $("#exampleInputPassword1").val(),
+                        },
+                        success: function(data, status){
+                            $("#resultat").html(`<p class='message container'>You successfully created an account! ${data} ${status}</p>`);
+                        },
+                        error: function(){
+                            $('#resultat').html("<p>Sign up error</p>")
+                        }
+                    });
+                });
+            });
+         
+        </script>
+</body>
+
+</html>

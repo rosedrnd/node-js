@@ -1,0 +1,22 @@
+.btn-primary {
+    color: #ffffff;
+    background-color: #de8698;
+    border-color: #de8698;
+    margin-top: 20px;
+}
+:hover.btn-primary{
+    background-color: #d1a1aa;
+    border-color: #d1a1aa;
+}
+.message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px; 
+    background-color: #de8698;
+    width: auto;
+    height: 50px;
+    color: white;
+    border-radius: 5px;
+
+}
